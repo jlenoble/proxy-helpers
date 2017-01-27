@@ -12,6 +12,7 @@ export default function makeProxiedMethods (obj) {
     some: 'someOwnProperty',
     every: 'everyOwnProperty',
     snapshot: 'snapshotOwnProperties',
+    equiv: 'equivOwnProperties',
   }));
 
   Object.assign(proxiedMethods, makeIsMethods(obj));

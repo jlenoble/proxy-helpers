@@ -200,4 +200,54 @@ describe('makeProxiedMethods(obj)', function () {
       },
     });
   });
+
+  it('Testing equiv methods', function () {
+    const obj = {
+      a: 1,
+      b: {
+        d: {
+          f: 4,
+        },
+      },
+    };
+    Object.defineProperty(obj.b, 'c', {
+      value: 2,
+      writable: true,
+    });
+    Object.defineProperty(obj.b.d, 'e', {
+      value: 3,
+      writable: true,
+    });
+
+    const methods = makeProxiedMethods(obj);
+
+    expect(methods.equiv({
+      a: 1,
+      b: {
+        d: {
+          f: 4,
+        },
+      },
+    })).to.be.true;
+
+    expect(methods.equivOwnProperties({
+      a: 1,
+      b: {
+        d: {
+          f: 4,
+        },
+      },
+    })).to.be.false;
+
+    expect(methods.equivOwnProperties( {
+      a: 1,
+      b: {
+        c: 2,
+        d: {
+          e: 3,
+          f: 4,
+        },
+      },
+    })).to.be.true;
+  });
 });
