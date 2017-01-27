@@ -1,0 +1,16 @@
+{
+  "generator-wupjs": {
+    "module": "proxy-helpers",
+    "description": "Extend objects with sugar methods without touching their prototypes",
+    "author": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com",
+    "github": "jlenoble",
+    "license": "MIT",
+    "transpile": "es2017",
+    "addons": [],
+    "Class": "ProxyHelpers",
+    "updated": 2017,
+    "created": 2017,
+    "year": "2017"
+  }
+}
