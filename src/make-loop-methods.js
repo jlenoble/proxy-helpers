@@ -1,3 +1,5 @@
+import isEnumerable from './is-enumerable';
+
 export default function makeLoopMethods (obj, keys, _names) {
   const loopMethods = {};
   const names = Object.assign({
@@ -6,6 +8,7 @@ export default function makeLoopMethods (obj, keys, _names) {
     map: 'map',
     some: 'some',
     every: 'every',
+    snapshot: 'snapshot',
   }, _names);
 
   Object.keys(names).forEach(name => {
@@ -45,6 +48,22 @@ export default function makeLoopMethods (obj, keys, _names) {
         const res = {};
         keys.forEach(key => {
           res[key] = func(obj[key], key, obj);
+        });
+        return res;
+      };
+      break;
+
+    case 'snapshot':
+      loopMethods[names[name]] = function () {
+        const res = {};
+        keys.forEach(key => {
+          const value = obj[key];
+          if (isEnumerable(value)) {
+            const meths = makeLoopMethods(value);
+            res[key] = meths.snapshot();
+          } else {
+            res[key] = value;
+          }
         });
         return res;
       };
