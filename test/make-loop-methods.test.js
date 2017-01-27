@@ -7,9 +7,8 @@ describe('makeLoopMethods(obj, keys, names)', function () {
       a: 1,
       b: 2,
     };
-    const keys = Object.keys(obj);
 
-    const methods = makeLoopMethods(obj, keys);
+    const methods = makeLoopMethods(obj, 'keys');
 
     expect(methods.keys()).to.eql(['a', 'b']);
 
@@ -38,7 +37,6 @@ describe('makeLoopMethods(obj, keys, names)', function () {
       a: 1,
       b: 2,
     };
-    const keys = Object.keys(obj);
     const names = {
       keys: 'ownProperties',
       forEach: 'forEachOwnProperty',
@@ -47,7 +45,7 @@ describe('makeLoopMethods(obj, keys, names)', function () {
       every: 'everyOwnProperty',
     };
 
-    const methods = makeLoopMethods(obj, keys, names);
+    const methods = makeLoopMethods(obj, 'keys', names);
 
     expect(methods.ownProperties()).to.eql(['a', 'b']);
 
@@ -80,9 +78,7 @@ describe('makeLoopMethods(obj, keys, names)', function () {
     obj.a = 1;
     obj.c = 3;
 
-    const keys = Object.keys(obj);
-
-    const methods = makeLoopMethods(obj, keys);
+    const methods = makeLoopMethods(obj, 'keys');
 
     expect(methods.keys()).to.eql(['a', 'c']);
 
@@ -116,9 +112,7 @@ describe('makeLoopMethods(obj, keys, names)', function () {
     obj.a = 1;
     obj.c = 3;
 
-    const keys = Object.getOwnPropertyNames(obj);
-
-    const methods = makeLoopMethods(obj, keys);
+    const methods = makeLoopMethods(obj, 'getOwnPropertyNames');
 
     expect(methods.keys()).to.eql(['b', 'a', 'c']);
 

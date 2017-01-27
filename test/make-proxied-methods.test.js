@@ -1,3 +1,4 @@
+import isEnumerable from '../src/is-enumerable';
 import makeProxiedMethods from '../src/make-proxied-methods';
 import {expect} from 'chai';
 
@@ -84,5 +85,119 @@ describe('makeProxiedMethods(obj)', function () {
     expect(methods.propertyIsConfigurable('a')).to.be.true;
     expect(methods.propertyIsConfigurable('b')).to.be.true;
     expect(methods.propertyIsConfigurable('c')).to.be.false;
+  });
+
+  it('Testing snapshot methods', function () {
+    const obj = {
+      a: 1,
+      b: {
+        d: {
+          f: 4,
+        },
+      },
+    };
+    Object.defineProperty(obj.b, 'c', {
+      value: 2,
+      writable: true,
+    });
+    Object.defineProperty(obj.b.d, 'e', {
+      value: 3,
+      writable: true,
+    });
+
+    const methods = makeProxiedMethods(obj);
+
+    let s = methods.snapshot();
+
+    expect(s).to.eql(obj);
+
+    const func = (x, key, obj) => {
+      if (isEnumerable(x)) {
+        Object.keys(x).forEach(key => {
+          func(x[key], key, x);
+        });
+      } else {
+        obj[key] = 2 * x; // eslint-disable-line no-param-reassign
+      }
+    };
+
+    methods.forEach(func);
+
+    expect(obj).to.eql({
+      a: 2,
+      b: {
+        d: {
+          f: 8,
+        },
+      },
+    });
+    expect(obj.b.c).to.equal(2);
+    expect(obj.b.d.e).to.equal(3);
+
+    expect(s).not.to.eql(obj);
+
+    s = methods.snapshot();
+
+    expect(s).to.eql(obj);
+
+    s = methods.snapshotOwnProperties();
+
+    expect(s).to.eql({
+      a: 2,
+      b: {
+        c: 2,
+        d: {
+          e: 3,
+          f: 8,
+        },
+      },
+    });
+
+    const func2 = (x, key, obj) => {
+      if (isEnumerable(x)) {
+        Object.getOwnPropertyNames(x).forEach(key => {
+          func2(x[key], key, x);
+        });
+      } else {
+        obj[key] = 2 * x; // eslint-disable-line no-param-reassign
+      }
+    };
+
+    methods.forEach(func2);
+
+    expect(obj).to.eql({
+      a: 4,
+      b: {
+        d: {
+          f: 16,
+        },
+      },
+    });
+    expect(obj.b.c).to.equal(4);
+    expect(obj.b.d.e).to.equal(6);
+
+    expect(s).not.to.eql({
+      a: 4,
+      b: {
+        c: 4,
+        d: {
+          e: 6,
+          f: 16,
+        },
+      },
+    });
+
+    s = methods.snapshotOwnProperties();
+
+    expect(s).to.eql({
+      a: 4,
+      b: {
+        c: 4,
+        d: {
+          e: 6,
+          f: 16,
+        },
+      },
+    });
   });
 });

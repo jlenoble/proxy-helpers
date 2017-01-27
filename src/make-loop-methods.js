@@ -1,6 +1,8 @@
 import isEnumerable from './is-enumerable';
 
-export function makeLoopMethod (obj, keys, name) {
+export function makeLoopMethod (obj, _keys, name) {
+  const keys = Object[_keys](obj);
+
   switch (name) {
   case 'keys':
     return function () {
@@ -43,8 +45,7 @@ export function makeLoopMethod (obj, keys, name) {
       keys.forEach(key => {
         const value = obj[key];
         if (isEnumerable(value)) {
-          const meths = makeLoopMethods(value);
-          res[key] = meths.snapshot();
+          res[key] = makeLoopMethod(value, _keys, 'snapshot')();
         } else {
           res[key] = value;
         }
