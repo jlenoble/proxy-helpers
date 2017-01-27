@@ -52,6 +52,27 @@ export function makeLoopMethod (obj, _keys, name) {
       });
       return res;
     };
+
+  case 'equiv':
+    return function (compObj) {
+      if (!isEnumerable(compObj)) {
+        return false;
+      }
+
+      const otherKeys = makeLoopMethod(compObj, _keys, 'keys')();
+
+      if (keys.length !== otherKeys.length) {
+        return false;
+      }
+
+      return keys.every(key => {
+        const value = obj[key];
+        if (!isEnumerable(value)) {
+          return value === compObj[key];
+        }
+        return makeLoopMethod(value, _keys, 'equiv')(compObj[key]);
+      });
+    };
   }
 }
 
@@ -64,6 +85,7 @@ export default function makeLoopMethods (obj, keys, _names) {
     some: 'some',
     every: 'every',
     snapshot: 'snapshot',
+    equiv: 'equiv',
   }, _names);
 
   Object.keys(names).forEach(name => {
