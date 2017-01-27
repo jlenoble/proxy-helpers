@@ -1,4 +1,5 @@
 import makeLoopMethods from './make-loop-methods';
+import makeIsMethods from './make-is-methods';
 
 export default function makeProxiedMethods (obj) {
   const proxiedMethods = {};
@@ -12,6 +13,8 @@ export default function makeProxiedMethods (obj) {
       some: 'someOwnProperty',
       every: 'everyOwnProperty',
     }));
+
+  Object.assign(proxiedMethods, makeIsMethods(obj));
 
   return proxiedMethods;
 };

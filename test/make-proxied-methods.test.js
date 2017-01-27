@@ -60,4 +60,29 @@ describe('makeProxiedMethods(obj)', function () {
     expect(methods.everyOwnProperty(value => value < 9)).to.be.true;
     expect(methods.everyOwnProperty(value => value < 4)).to.be.false;
   });
+
+  it('Testing is methods', function () {
+    const obj = {
+      a: 1,
+      b: 2,
+    };
+    Object.defineProperty(obj, 'c', {
+      value: 3,
+      writable: true,
+    });
+
+    const methods = makeProxiedMethods(obj);
+
+    expect(methods.propertyIsWritable('a')).to.be.true;
+    expect(methods.propertyIsWritable('b')).to.be.true;
+    expect(methods.propertyIsWritable('c')).to.be.true;
+
+    expect(methods.propertyIsEnumerable('a')).to.be.true;
+    expect(methods.propertyIsEnumerable('b')).to.be.true;
+    expect(methods.propertyIsEnumerable('c')).to.be.false;
+
+    expect(methods.propertyIsConfigurable('a')).to.be.true;
+    expect(methods.propertyIsConfigurable('b')).to.be.true;
+    expect(methods.propertyIsConfigurable('c')).to.be.false;
+  });
 });
