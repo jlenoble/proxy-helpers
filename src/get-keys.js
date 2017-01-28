@@ -1,3 +1,13 @@
+export function isExcludedMethod (method) {
+  switch (method) {
+  case 'constructor': case 'call': case 'apply': case 'bind':
+    return true;
+
+  default:
+    return false;
+  }
+}
+
 export function getAttributes (obj) {
   return Object.keys(obj).filter(key => {
     return typeof obj[key] !== 'function';
@@ -15,7 +25,7 @@ export function getMethods (obj) {
   const instanceMethods = new Set();
 
   Object.getOwnPropertyNames(obj).filter(key => {
-    return typeof obj[key] === 'function';
+    return !isExcludedMethod(key) && typeof obj[key] === 'function';
   }).forEach(key => {
     instanceMethods.add(key);
   });
@@ -30,7 +40,7 @@ export function getMethods (obj) {
     }
 
     Object.getOwnPropertyNames(proto).filter(key => {
-      return key !== 'constructor' && typeof obj[key] === 'function';
+      return !isExcludedMethod(key) && typeof obj[key] === 'function';
     }).forEach(key => {
       instanceMethods.add(key);
     });
