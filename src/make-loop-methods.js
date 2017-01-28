@@ -2,31 +2,31 @@ import isEnumerable from './is-enumerable';
 import getKeys from './get-keys';
 
 export function makeLoopMethod (obj, _keys, name) {
-  const keys = getKeys(obj, _keys);
+  const keys = getKeys.bind(undefined, obj, _keys);
 
   switch (name) {
   case 'keys':
     return function () {
-      return keys;
+      return keys();
     };
 
   case 'forEach':
     return function (func) {
-      keys.forEach(key => {
+      keys().forEach(key => {
         func(obj[key], key, obj);
       });
     };
 
   case 'some':
     return function (func) {
-      return keys.some(key => {
+      return keys().some(key => {
         return func(obj[key], key, obj);
       });
     };
 
   case 'every':
     return function (func) {
-      return keys.every(key => {
+      return keys().every(key => {
         return func(obj[key], key, obj);
       });
     };
@@ -34,7 +34,7 @@ export function makeLoopMethod (obj, _keys, name) {
   case 'map':
     return function (func) {
       const res = {};
-      keys.forEach(key => {
+      keys().forEach(key => {
         res[key] = func(obj[key], key, obj);
       });
       return res;
@@ -43,7 +43,7 @@ export function makeLoopMethod (obj, _keys, name) {
   case 'snapshot':
     return function () {
       const res = {};
-      keys.forEach(key => {
+      keys().forEach(key => {
         const value = obj[key];
         if (isEnumerable(value)) {
           res[key] = makeLoopMethod(value, _keys, 'snapshot')();
@@ -60,13 +60,14 @@ export function makeLoopMethod (obj, _keys, name) {
         return false;
       }
 
+      const selfKeys = keys();
       const otherKeys = Object.keys(compObj);
 
-      if (keys.length !== otherKeys.length) {
+      if (selfKeys.length !== otherKeys.length) {
         return false;
       }
 
-      return keys.every(key => {
+      return selfKeys.every(key => {
         const value = obj[key];
         if (!isEnumerable(value)) {
           return value === compObj[key];
