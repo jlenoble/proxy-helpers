@@ -32,6 +32,15 @@ export default function makeProxiedMethods (obj) {
     snapshot: 'snapshotStates',
     equiv: 'equivStates',
   }));
+  Object.assign(proxiedMethods, makeLoopMethods(obj, 'methods', {
+    keys: 'methodKeys',
+    forEach: 'forEachMethod',
+    map: 'mapMethods',
+    some: 'someMethod',
+    every: 'everyMethod',
+    snapshot: 'snapshotMethods',
+    equiv: 'equivMethods',
+  }));
 
   Object.assign(proxiedMethods, makeIsMethods(obj));
 
