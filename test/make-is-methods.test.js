@@ -17,13 +17,16 @@ describe('makeIsMethods(obj)', function () {
     expect(methods.propertyIsWritable('a')).to.be.true;
     expect(methods.propertyIsWritable('b')).to.be.true;
     expect(methods.propertyIsWritable('c')).to.be.true;
+    expect(methods.propertyIsWritable('d')).to.be.undefined;
 
     expect(methods.propertyIsEnumerable('a')).to.be.true;
     expect(methods.propertyIsEnumerable('b')).to.be.true;
     expect(methods.propertyIsEnumerable('c')).to.be.false;
+    expect(methods.propertyIsEnumerable('d')).to.be.undefined;
 
     expect(methods.propertyIsConfigurable('a')).to.be.true;
     expect(methods.propertyIsConfigurable('b')).to.be.true;
     expect(methods.propertyIsConfigurable('c')).to.be.false;
+    expect(methods.propertyIsConfigurable('d')).to.be.undefined;
   });
 });

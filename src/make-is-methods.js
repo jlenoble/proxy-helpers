@@ -5,7 +5,10 @@ export default function makeIsMethods (obj) {
     let method = 'propertyIs' + xable[0].toUpperCase() + xable.substr(1);
 
     isMethods[method] = function (name) {
-      return Object.getOwnPropertyDescriptor(obj, name)[xable];
+      const descriptor = Object.getOwnPropertyDescriptor(obj, name);
+      if (descriptor !== undefined) {
+        return descriptor[xable];
+      };
     };
   });
 
