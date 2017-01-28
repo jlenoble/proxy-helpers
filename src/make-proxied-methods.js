@@ -6,7 +6,7 @@ export default function makeProxiedMethods (obj) {
 
   Object.assign(proxiedMethods, makeLoopMethods(obj, 'keys'));
   Object.assign(proxiedMethods, makeLoopMethods(obj, 'getOwnPropertyNames', {
-    keys: 'ownProperties',
+    keys: 'ownPropertyKeys',
     forEach: 'forEachOwnProperty',
     map: 'mapOwnProperties',
     some: 'someOwnProperty',

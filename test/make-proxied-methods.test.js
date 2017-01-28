@@ -38,7 +38,7 @@ describe('makeProxiedMethods(obj)', function () {
     expect(methods.every(value => value < 5)).to.be.true;
     expect(methods.every(value => value < 4)).to.be.false;
 
-    expect(methods.ownProperties()).to.eql(['a', 'b', 'c']);
+    expect(methods.ownPropertyKeys()).to.eql(['a', 'b', 'c']);
 
     methods.forEachOwnProperty((value, key, obj) => {
       obj[key] = 2 * value; // eslint-disable-line no-param-reassign

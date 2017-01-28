@@ -78,7 +78,7 @@ describe('makeProxiedMethods with classes', function () {
     })).to.be.true;
 
     expect(child.keys()).to.eql(['x']);
-    expect(child.ownProperties()).to.eql(['x', 'y']);
+    expect(child.ownPropertyKeys()).to.eql(['x', 'y']);
     expect(child.attributeKeys()).to.eql(['x']);
     expect(child.stateKeys()).to.eql(['y']);
     expect(child.methodKeys()).to.eql(['hi', 'hello']);
@@ -130,7 +130,7 @@ describe('makeProxiedMethods with classes', function () {
     })).to.be.true;
 
     expect(child.keys()).to.eql(['x', 'hi']);
-    expect(child.ownProperties()).to.eql(['x', 'y', 'hi']);
+    expect(child.ownPropertyKeys()).to.eql(['x', 'y', 'hi']);
     expect(child.attributeKeys()).to.eql(['x']);
     expect(child.stateKeys()).to.eql(['y']);
     expect(child.methodKeys()).to.eql(['hi', 'hello']);
