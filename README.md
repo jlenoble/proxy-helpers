@@ -101,6 +101,34 @@ p2.stateKeys(); // ['y'];
 p2.methodKeys(); // ['hi', 'hello'];
 ```
 
+### Looping over properties
+
+* ```forEach((value, key, obj) => {...})```: like Array forEach, applied to enumerable properties of instance.
+* ```map((value, key, obj) => {...})```: like Array map, applied to enumerable properties of instance.
+* ```some((value, key, obj) => {...})```: like Array some, applied to enumerable properties of instance.
+* ```every((value, key, obj) => {...})```: like Array every, applied to enumerable properties of instance.
+
+There exist corresponding counterparts for different sets of keys (see [Getting properties](#getting-properties)):
+
+* forEachOwnProperty/mapOwnProperties/someOwnProperty/everyOwnProperty
+* forEachAttribute/mapAttributes/someAttribute/everyAttribute
+* forEachState/mapStates/someState/everyState
+* forEachMethod/mapMethods/someMethod/everyMethod
+
+### Testing descriptors
+
+* ```propertyIsWritable(key)```: Whether or not key property is writable.
+* ```propertyIsEnumerable(key)```: Whether or not key property is enumerable.
+* ```propertyIsConfigurable(key)```: Whether or not key property is configurable.
+
+### Taking a snapshot
+
+Any time you can take a snatshot of a set of properties, calling with no arguments methods snapshot/snapshotOwnProperties/snapshotAttributes/snapshotStates/snapshotMethods.
+
+### Comparing
+
+Any time you can take compare of a set of properties to expected values calling equiv/equivOwnProperties/equivAttributes/equivStates/equivMethods.
+
 ## License
 
 proxy-helpers is [MIT licensed](./LICENSE).
