@@ -2,6 +2,30 @@ import makeProxy from '../src/proxy-helpers';
 import {expect} from 'chai';
 
 describe('Testing README.md examples', function () {
+  it('An actual proxy example', function () {
+    const obj = {
+      a: 1,
+      b: 'foo',
+    };
+    const o = makeProxy(obj);
+
+    expect(o.a).to.equal(1);
+    expect(o.b).to.equal('foo');
+    o.a = 2;
+    expect(obj.a).to.equal(2);
+    o.c = 3;
+    expect(obj.c).to.equal(3);
+
+    const arr = [0, 1, 2];
+    const a = makeProxy(arr);
+
+    expect(a[0]).to.equal(0);
+    a[1] = 6;
+    expect(arr[1]).to.equal(6);
+    a.push(9);
+    expect(arr[3]).to.equal(9);
+  });
+
   it('Getting properties example', function () {
     class Parent {
       constructor (x, y) {

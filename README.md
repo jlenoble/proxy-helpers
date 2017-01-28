@@ -3,9 +3,41 @@ Extend objects with sugar methods without touching their prototypes
 
 ## Usage
 
-Applied to an object, function ```makeProxy``` returns a proxy to that object coated with many sugar methods allowing to manipulate it and to get to its internals.
+Function ```makeProxy``` returns a proxy to its argument coated with many sugar methods allowing to manipulate it and to get to its internals. Only object types are handled though (including Array-like structures);
+
+### An actual proxy
+
+```makeProxy``` uses the ```Proxy``` constructor to create its proxy before coating it with sugar, making sure the returned object behaves in every respect like the original object when sugar methods are not called.
+
+```js
+import makeProxy from 'proxy-helpers';
+
+const obj = {
+  a: 1,
+  b: 'foo',
+};
+const o = makeProxy(obj);
+
+o.a; // 1
+o.b; // 'foo'
+o.a = 2;
+obj.a; // 2
+o.c = 3;
+obj.c; // 3
+
+const arr = [0, 1, 2];
+const a = makeProxy(arr);
+
+a[0]; // 0
+a[1] = 6;
+arr[1]; // 6
+a.push(9);
+arr[3]; // 9
+```
 
 ### Getting properties
+
+A few methods are provided to steamline getting at the original object internals.
 
 * ```keys()```: Returns all enumerable keys of instance.
 * ```ownPropertyKeys()```: Returns all property keys of instance.
