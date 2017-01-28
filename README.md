@@ -4,7 +4,7 @@ Extend objects with sugar methods without touching their prototypes
 ## Usage
 
 ```js
-import ProxyHelpers from 'proxy-helpers';
+import makeProxy from 'proxy-helpers';
 ```
 
 ## License

@@ -2,7 +2,7 @@ import makeProxiedMethods from './make-proxied-methods';
 
 const isTestFriendly = Symbol();
 
-export default function makeTestFriendlyProxy (obj) {
+export default function makeProxy (obj) {
   const helpers = makeProxiedMethods(obj);
 
   Object.defineProperty(helpers, isTestFriendly, {

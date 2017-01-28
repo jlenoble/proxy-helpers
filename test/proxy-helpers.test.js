@@ -1,14 +1,14 @@
-import makeTestFriendlyProxy from '../src/proxy-helpers';
+import makeProxy from '../src/proxy-helpers';
 import {expect} from 'chai';
 
-describe('makeTestFriendlyProxy(obj)', function () {
+describe('makeProxy(obj)', function () {
   it('Using literal object', function () {
     const obj = {
       a: 1,
       b: 2,
     };
 
-    const proxy = makeTestFriendlyProxy(obj);
+    const proxy = makeProxy(obj);
 
     expect(proxy.snapshot()).to.eql(obj);
 
@@ -19,6 +19,18 @@ describe('makeTestFriendlyProxy(obj)', function () {
       b: 2,
       c: 3,
     });
+
+    expect(proxy.equiv({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
+
+    expect(proxy.equivOwnProperties({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
   });
 
   it('Using proxy of literal', function () {
@@ -28,7 +40,7 @@ describe('makeTestFriendlyProxy(obj)', function () {
     };
 
     const proxy0 = new Proxy(obj, {});
-    const proxy = makeTestFriendlyProxy(proxy0);
+    const proxy = makeProxy(proxy0);
 
     expect(proxy.snapshot()).to.eql(proxy0);
     expect(proxy.snapshot()).to.eql(obj);
@@ -40,6 +52,18 @@ describe('makeTestFriendlyProxy(obj)', function () {
       b: 2,
       c: 3,
     });
+
+    expect(proxy.equiv({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
+
+    expect(proxy.equivOwnProperties({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
   });
 
   it('Using test-friendly proxy of literal', function () {
@@ -48,8 +72,8 @@ describe('makeTestFriendlyProxy(obj)', function () {
       b: 2,
     };
 
-    const proxy0 = makeTestFriendlyProxy(obj);
-    const proxy = makeTestFriendlyProxy(proxy0);
+    const proxy0 = makeProxy(obj);
+    const proxy = makeProxy(proxy0);
 
     expect(proxy.snapshot()).to.eql(proxy0);
     expect(proxy.snapshot()).to.eql(obj);
@@ -61,5 +85,17 @@ describe('makeTestFriendlyProxy(obj)', function () {
       b: 2,
       c: 3,
     });
+
+    expect(proxy.equiv({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
+
+    expect(proxy.equivOwnProperties({
+      a: 1,
+      b: 2,
+      c: 3,
+    })).to.be.true;
   });
 });
