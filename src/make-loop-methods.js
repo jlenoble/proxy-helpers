@@ -2,6 +2,11 @@ import isEnumerable from './is-enumerable';
 
 export function getKeys (obj, keys) {
   switch (keys) {
+  case 'attributes':
+    return Object.keys(obj).filter(key => {
+      return typeof obj[key] !== 'function';
+    });
+
   default:
     return Object[keys](obj);
   }

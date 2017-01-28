@@ -48,6 +48,9 @@ describe('makeProxiedMethods with classes', function () {
       x: 1,
       y: 2,
     });
+    expect(child.snapshotAttributes()).to.eql({
+      x: 1,
+    });
 
     expect(child.equiv({
       x: 1,
@@ -56,9 +59,13 @@ describe('makeProxiedMethods with classes', function () {
       x: 1,
       y: 2,
     })).to.be.true;
+    expect(child.equivAttributes({
+      x: 1,
+    })).to.be.true;
 
     expect(child.keys()).to.eql(['x']);
     expect(child.ownProperties()).to.eql(['x', 'y']);
+    expect(child.attributeKeys()).to.eql(['x']);
   });
 
   it('Class with one method overloaded in ctor', function () {
@@ -75,6 +82,9 @@ describe('makeProxiedMethods with classes', function () {
       y: 2,
       hi: c.hi,
     });
+    expect(child.snapshotAttributes()).to.eql({
+      x: 1,
+    });
 
     expect(child.equiv({
       x: 1,
@@ -85,8 +95,12 @@ describe('makeProxiedMethods with classes', function () {
       y: 2,
       hi: c.hi,
     })).to.be.true;
+    expect(child.equivAttributes({
+      x: 1,
+    })).to.be.true;
 
     expect(child.keys()).to.eql(['x', 'hi']);
     expect(child.ownProperties()).to.eql(['x', 'y', 'hi']);
+    expect(child.attributeKeys()).to.eql(['x']);
   });
 });
