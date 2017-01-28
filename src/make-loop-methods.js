@@ -7,6 +7,12 @@ export function getKeys (obj, keys) {
       return typeof obj[key] !== 'function';
     });
 
+  case 'states':
+    return Object.getOwnPropertyNames(obj).filter(key => {
+      return !Object.getOwnPropertyDescriptor(obj, key).enumerable &&
+        typeof obj[key] !== 'function';
+    });
+
   default:
     return Object[keys](obj);
   }
@@ -71,7 +77,7 @@ export function makeLoopMethod (obj, _keys, name) {
         return false;
       }
 
-      const otherKeys = makeLoopMethod(compObj, _keys, 'keys')();
+      const otherKeys = Object.keys(compObj);
 
       if (keys.length !== otherKeys.length) {
         return false;
