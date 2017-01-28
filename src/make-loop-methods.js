@@ -6,9 +6,7 @@ export function makeLoopMethod (obj, _keys, name) {
 
   switch (name) {
   case 'keys':
-    return function () {
-      return keys();
-    };
+    return keys;
 
   case 'forEach':
     return function (func) {
