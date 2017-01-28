@@ -1,7 +1,14 @@
 import isEnumerable from './is-enumerable';
 
+export function getKeys (obj, keys) {
+  switch (keys) {
+  default:
+    return Object[keys](obj);
+  }
+}
+
 export function makeLoopMethod (obj, _keys, name) {
-  const keys = Object[_keys](obj);
+  const keys = getKeys(obj, _keys);
 
   switch (name) {
   case 'keys':
