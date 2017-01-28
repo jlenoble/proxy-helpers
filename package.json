@@ -1,6 +1,6 @@
 {
   "name": "proxy-helpers",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Extend objects with sugar methods without touching their prototypes",
   "main": "lib/proxy-helpers.js",
   "scripts": {
