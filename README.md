@@ -3,11 +3,11 @@ Extend objects with sugar methods without touching their prototypes
 
 ## Usage
 
-Function ```makeProxy``` returns a proxy to its argument coated with many sugar methods allowing to manipulate it and to get to its internals. Only object types are handled though (including Array-like structures);
+Function `makeProxy` returns a proxy to its argument coated with many sugar methods allowing to manipulate it and to get to its internals. Only object types are handled though (including Array-like structures);
 
 ### An actual proxy
 
-```makeProxy``` uses the ```Proxy``` constructor to create its proxy before coating it with sugar, making sure the returned object behaves in every respect like the original object when sugar methods are not called.
+`makeProxy` uses the `Proxy` constructor to create its proxy before coating it with sugar, making sure the returned object behaves in every respect like the original object when sugar methods are not called.
 
 ```js
 import makeProxy from 'proxy-helpers';
@@ -37,13 +37,14 @@ arr[3]; // 9
 
 ### Getting properties
 
-A few methods are provided to steamline getting at the original object internals.
+A few methods are provided to streamline getting at the original object internals.
 
-* ```keys()```: Returns all enumerable keys of instance.
-* ```ownPropertyKeys()```: Returns all property keys of instance.
-* ```attributeKeys()```: ```keys()``` restricted to non functions.
-* ```stateKeys()```: Non enumerable, non function keys of instance.
-* ```methodKeys()```: all function keys, up the prototype chain of instance, ```Object.prototype``` excluded, instance included.
+* `keys()`: Returns all enumerable keys of instance.
+* `ownPropertyKeys()`: Returns all property keys of instance.
+* `attributeKeys()`: `keys()` restricted to non functions.
+* `stateKeys()`: Non enumerable, non function keys of instance.
+* `methodKeys()`: all function keys, up the prototype chain of instance, `Object.prototype` excluded, instance included.
+* `allMethodKeys()`: all function keys, up the prototype chain of instance, including `Object.prototype`, instance included.
 
 ```js
 import makeProxy from 'proxy-helpers';
@@ -93,20 +94,22 @@ p1.ownPropertyKeys(); // ['x', 'y'];
 p1.attributeKeys(); // ['x'];
 p1.stateKeys(); // ['y'];
 p1.methodKeys(); // ['hi', 'hello'];
+p1.allMethodKeys(); // ['hi', 'hello', 'toString', 'valueOf', ...];
 
 p2.keys(); // ['x', 'hi'];
 p2.ownPropertyKeys(); // ['x', 'y', 'hi'];
 p2.attributeKeys(); // ['x'];
 p2.stateKeys(); // ['y'];
 p2.methodKeys(); // ['hi', 'hello'];
+p2.allMethodKeys(); // ['hi', 'hello', 'toString', 'valueOf', ...];
 ```
 
-### Looping over properties
+### Looping over properties
 
-* ```forEach((value, key, obj) => {...})```: like Array forEach, applied to enumerable properties of instance.
-* ```map((value, key, obj) => {...})```: like Array map, applied to enumerable properties of instance.
-* ```some((value, key, obj) => {...})```: like Array some, applied to enumerable properties of instance.
-* ```every((value, key, obj) => {...})```: like Array every, applied to enumerable properties of instance.
+* `forEach((value, key, obj) => {...})`: like Array forEach, applied to enumerable properties of instance.
+* `map((value, key, obj) => {...})`: like Array map, applied to enumerable properties of instance.
+* `some((value, key, obj) => {...})`: like Array some, applied to enumerable properties of instance.
+* `every((value, key, obj) => {...})`: like Array every, applied to enumerable properties of instance.
 
 There exist corresponding counterparts for different sets of keys (see [Getting properties](#getting-properties)):
 
@@ -114,23 +117,24 @@ There exist corresponding counterparts for different sets of keys (see [Getting 
 * forEachAttribute/mapAttributes/someAttribute/everyAttribute
 * forEachState/mapStates/someState/everyState
 * forEachMethod/mapMethods/someMethod/everyMethod
+* forEachMethodAll/mapMethodsAll/someMethodAll/everyMethodAll
 
 ### Testing descriptors
 
-* ```propertyIsWritable(key)```: Whether or not key property is writable.
-* ```propertyIsEnumerable(key)```: Whether or not key property is enumerable.
-* ```propertyIsConfigurable(key)```: Whether or not key property is configurable.
+* `propertyIsWritable(key)`: Whether or not key property is writable.
+* `propertyIsEnumerable(key)`: Whether or not key property is enumerable.
+* `propertyIsConfigurable(key)`: Whether or not key property is configurable.
 
 ### Taking a snapshot
 
-Any time you can take a snatshot of a set of properties, calling with no arguments methods snapshot/snapshotOwnProperties/snapshotAttributes/snapshotStates/snapshotMethods.
+Any time you can take a snapshot of a set of properties, calling with no arguments methods snapshot/snapshotOwnProperties/snapshotAttributes/snapshotStates/snapshotMethods/snapshotMethodsAll.
 
 ### Comparing
 
-Any time you can take compare of a set of properties to expected values calling equiv/equivOwnProperties/equivAttributes/equivStates/equivMethods.
+Any time you can compare a set of properties to expected values calling equiv/equivOwnProperties/equivAttributes/equivStates/equivMethods/equivMethodsAll.
 
 ## License
 
 proxy-helpers is [MIT licensed](./LICENSE).
 
-© 2017 [Jason Lenoble](mailto:jason.lenoble@gmail.com)
+© 2017-2019 [Jason Lenoble](mailto:jason.lenoble@gmail.com)
