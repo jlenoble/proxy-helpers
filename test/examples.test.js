@@ -67,16 +67,22 @@ describe('Testing README.md examples', function () {
     const p1 = makeProxy(c1);
     const p2 = makeProxy(c2);
 
+    const okeys = Object.getOwnPropertyNames(Object.prototype).filter(key => {
+      return typeof Object.prototype[key] === 'function';
+    });
+
     expect(p1.keys()).to.eql(['x']);
     expect(p1.ownPropertyKeys()).to.eql(['x', 'y']);
     expect(p1.attributeKeys()).to.eql(['x']);
     expect(p1.stateKeys()).to.eql(['y']);
     expect(p1.methodKeys()).to.eql(['hi', 'hello']);
+    expect(p1.allMethodKeys()).to.eql(['hi', 'hello', ...okeys]);
 
     expect(p2.keys()).to.eql(['x', 'hi']);
     expect(p2.ownPropertyKeys()).to.eql(['x', 'y', 'hi']);
     expect(p2.attributeKeys()).to.eql(['x']);
     expect(p2.stateKeys()).to.eql(['y']);
     expect(p2.methodKeys()).to.eql(['hi', 'hello']);
+    expect(p2.allMethodKeys()).to.eql(['hi', 'hello', ...okeys]);
   });
 });
